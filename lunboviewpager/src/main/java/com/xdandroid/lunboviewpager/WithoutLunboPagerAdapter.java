@@ -12,7 +12,7 @@ public abstract class WithoutLunboPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return getImageCount();
+        return 1;
     }
 
     @Override
@@ -22,34 +22,24 @@ public abstract class WithoutLunboPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, final int position) {
-        View view = LayoutInflater.from(container.getContext()).inflate(getLayoutResId(), container, false);
+        View view = LayoutInflater.from(container.getContext()).inflate(getViewPagerItemLayoutResId(), container, false);
         final View imageView = showImage(view, position);
-        if (mOnImageClickLitener != null) {
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnImageClickLitener.onImageClick(imageView,position);
-                }
-            });
-        }
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onImageClick(imageView,position);
+            }
+        });
         container.addView(view);
         return view;
     }
 
+    protected abstract void onImageClick(View view, int position);
     protected abstract View showImage(View inflatedLayout, int position);
-    protected abstract int getLayoutResId();
-    protected abstract int getImageCount();
+    protected abstract int getViewPagerItemLayoutResId();
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
-    }
-
-    public interface OnImageClickLitener {
-        public void onImageClick(View view, int position);
-    }
-    private OnImageClickLitener mOnImageClickLitener;
-    public void setOnImageClickLitener(OnImageClickLitener mOnImageClickLitener) {
-        this.mOnImageClickLitener = mOnImageClickLitener;
     }
 }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.xdandroid.sample.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="56dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="188dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context="com.xdandroid.sample.MainActivity"
+            tools:showIn="@layout/activity_main"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:text="上面是一个RecyclerView，轮播图是RecyclerView的一个Item。"/>
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                            android:layout_width="352dp"
+                                            android:layout_height="176dp"
+                                            android:layout_gravity="center_horizontal"
+                                            android:layout_marginTop="4dp"
+                                            android:foreground="?attr/selectableItemBackground"
+                                            card_view:cardCornerRadius="2dp"
+                                            card_view:cardElevation="1.5dp"
+                                            card_view:cardPreventCornerOverlap="false"
+                                            card_view:cardUseCompatPadding="true">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vp_lunbo"
+                    android:layout_width="352dp"
+                    android:layout_height="176dp"/>
+
+                <com.xdandroid.lunboviewpager.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/indicator_lunbo"
+                    android:layout_width="37.5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginRight="2dp"/>
+            </FrameLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:textColor="@android:color/black"
+            android:text="上面的这个轮播图直接在Activity的Layout中。"/>
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

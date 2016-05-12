@@ -13,16 +13,31 @@ import java.util.List;
 public class PagerRecyclerViewProxy<T> {
 
     private List<T> list;
-    private LunboPagerAdapter lunboPagerAdapter;
     private long interval;
+    private LunboPagerAdapter lunboPagerAdapter;
     private WithoutLunboPagerAdapter withoutLunboPagerAdapter;
     private PagerHandler pagerHandler;
 
-    public PagerRecyclerViewProxy(List<T> list, LunboPagerAdapter lunboPagerAdapter, long interval, WithoutLunboPagerAdapter withoutLunboPagerAdapter) {
+    public PagerRecyclerViewProxy(List<T> list, long interval, LunboPagerAdapter pagerAdapter) {
         this.list = list;
-        this.lunboPagerAdapter = lunboPagerAdapter;
         this.interval = interval;
-        this.withoutLunboPagerAdapter = withoutLunboPagerAdapter;
+        this.lunboPagerAdapter = pagerAdapter;
+        this.withoutLunboPagerAdapter = new WithoutLunboPagerAdapter() {
+            @Override
+            protected void onImageClick(View view, int position) {
+                lunboPagerAdapter.onImageClick(view, position);
+            }
+
+            @Override
+            protected View showImage(View inflatedLayout, int position) {
+                return lunboPagerAdapter.showImage(inflatedLayout, position);
+            }
+
+            @Override
+            protected int getViewPagerItemLayoutResId() {
+                return lunboPagerAdapter.getViewPagerItemLayoutResId();
+            }
+        };
     }
 
     @SuppressWarnings({"unchecked", "CollectionAddedToSelf"})
@@ -52,13 +67,13 @@ public class PagerRecyclerViewProxy<T> {
         }
         method.setAccessible(true);
         Object[] args = new Object[2];
-        args[0] = viewPager;
-        args[1] = pagerHandler;
         if (list.size() >= 3) {
             indicator.setVisibility(View.VISIBLE);
             lunboPagerAdapter.notifyDataSetChanged();
             viewPager.setAdapter(lunboPagerAdapter);
             pagerHandler = new PagerHandler(viewPager, interval);
+            args[0] = viewPager;
+            args[1] = pagerHandler;
             try {
                 method.invoke(indicator,args);
             } catch (IllegalAccessException e) {
@@ -71,6 +86,8 @@ public class PagerRecyclerViewProxy<T> {
             lunboPagerAdapter.notifyDataSetChanged();
             viewPager.setAdapter(lunboPagerAdapter);
             pagerHandler = new PagerHandler(viewPager, interval);
+            args[0] = viewPager;
+            args[1] = pagerHandler;
             try {
                 method.invoke(indicator,args);
             } catch (IllegalAccessException e) {

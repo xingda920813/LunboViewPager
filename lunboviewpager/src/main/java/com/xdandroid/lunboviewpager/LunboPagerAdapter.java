@@ -22,17 +22,15 @@ public abstract class LunboPagerAdapter extends PagerAdapter {
 
     private void initImageViews() {
         for (int i = 0; i < getImageCount(); i++) {
-            views[i] = LayoutInflater.from(context).inflate(getLayoutResId(), null, false);
+            views[i] = LayoutInflater.from(context).inflate(getViewPagerItemLayoutResId(), null, false);
             sdvs[i] = showImage(views[i], i);
-            if (mOnImageClickLitener != null) {
-                final int finalI = i;
-                sdvs[i].setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mOnImageClickLitener.onImageClick(sdvs[finalI], finalI);
-                    }
-                });
-            }
+            final int finalI = i;
+            sdvs[i].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onImageClick(sdvs[finalI], finalI);
+                }
+            });
         }
     }
 
@@ -42,8 +40,9 @@ public abstract class LunboPagerAdapter extends PagerAdapter {
     }
 
     protected abstract View showImage(View inflatedLayout, int position);
-    protected abstract int getLayoutResId();
+    protected abstract int getViewPagerItemLayoutResId();
     protected abstract int getImageCount();
+    protected abstract void onImageClick(View view, int position);
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
@@ -69,13 +68,5 @@ public abstract class LunboPagerAdapter extends PagerAdapter {
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
         initImageViews();
-    }
-
-    public interface OnImageClickLitener {
-        public void onImageClick(View view, int position);
-    }
-    private OnImageClickLitener mOnImageClickLitener;
-    public void setOnImageClickLitener(OnImageClickLitener mOnImageClickLitener) {
-        this.mOnImageClickLitener = mOnImageClickLitener;
     }
 }
