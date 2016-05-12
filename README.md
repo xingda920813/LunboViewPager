@@ -1,7 +1,13 @@
 # LunboViewPager
 ### 对ViewPager和ViewPagerIndicator的简单封装，实现轮播图效果。
 
-###轮播图可以直接在Activity/Fragment中，也可以是RecyclerView的一个Item。
+- 轮播图可以直接在Activity/Fragment中，也可以是RecyclerView的一个Item。
+
+- 该有的基本都有，页码指示，左右无限循环翻页，定时自动翻页，用手指翻页时暂停自动翻页，只有一张图片时变为静态相框，解决原生ViewPager当页数为2时的滑动Bug。
+
+- 提供CirclePageIndicator（圆形）和RoundRectIndicator（圆角矩形）指示器
+
+![Alt text](https://raw.githubusercontent.com/xingda920813/LunboViewPager/master/video.gif)
 
 ## 引入
 ### 1.添加二进制
@@ -50,6 +56,8 @@
 ## 直接在Activity/Fragment内使用
 
 #### 1.给ViewPager和Indicator设置需要的自定义属性（OnPageChangeListener, Indicator的填充颜色, etc.）
+
+Indicator的可设置项参照JakeWharton/ViewPagerIndicator提供的API。
 
 	vp_lunbo.addOnPageChangeListener(onPageChangeListener);
     indicator_lunbo.setFillColor(getResources().getColor(R.color.colorAccent));
@@ -151,6 +159,8 @@ interval为轮播时间间隔。
 #### 4.onBindViewHolder
 
 先给ViewPager和Indicator设置需要的自定义属性（OnPageChangeListener, Indicator的填充颜色, etc.）
+
+Indicator的可设置项参照JakeWharton/ViewPagerIndicator提供的API。
 
 然后添加proxy.onBindViewHolder(holder.viewPager,holder.indicator);
 
