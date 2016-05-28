@@ -12,9 +12,9 @@
 ## 引入
 ### 1.添加二进制
 
-引入LunboViewPager-1.0.1.jar或build.gradle中添加
+引入LunboViewPager-1.0.2.jar或build.gradle中添加
 
-    compile 'com.xdandroid:lunboviewpager:1.0.1'
+    compile 'com.xdandroid:lunboviewpager:1.0.2'
 
 ### 2.确保项目中已经正确集成JakeWharton/ViewPagerIndicator
 
