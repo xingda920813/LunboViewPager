@@ -12,11 +12,11 @@ import java.util.List;
  */
 public class PagerProxy<T> {
 
-    private List<T> list;
-    private long interval;
-    private LunboPagerAdapter lunboPagerAdapter;
-    private WithoutLunboPagerAdapter withoutLunboPagerAdapter;
-    private PagerHandler pagerHandler;
+    protected List<T> list;
+    protected long interval;
+    protected LunboPagerAdapter lunboPagerAdapter;
+    protected WithoutLunboPagerAdapter withoutLunboPagerAdapter;
+    protected PagerHandler pagerHandler;
 
     public PagerProxy(List<T> list, long interval, LunboPagerAdapter pagerAdapter) {
         this.list = list;

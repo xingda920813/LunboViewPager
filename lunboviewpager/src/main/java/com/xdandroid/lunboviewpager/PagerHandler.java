@@ -9,7 +9,8 @@ import android.support.v4.view.ViewPager;
  */
 public class PagerHandler extends Handler {
 
-    public ViewPager viewPager;
+    protected ViewPager viewPager;
+    protected int currentItem;
 
     /**
      * 请求更新显示的View。
@@ -33,9 +34,7 @@ public class PagerHandler extends Handler {
     //轮播间隔时间
     public static long MSG_DELAY = 4000;
 
-    public int currentItem;
-
-    public PagerHandler(ViewPager viewPager, long interval) {
+    protected PagerHandler(ViewPager viewPager, long interval) {
         this.viewPager = viewPager;
         MSG_DELAY = interval;
         this.currentItem = (viewPager.getAdapter().getCount()) / 2;

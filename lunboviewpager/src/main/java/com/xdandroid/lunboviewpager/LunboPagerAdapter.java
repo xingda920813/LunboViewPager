@@ -11,16 +11,16 @@ import android.view.ViewGroup;
  */
 public abstract class LunboPagerAdapter extends PagerAdapter {
 
-    private Context context;
-    private View[] views = new View[20];
-    private View[] sdvs = new View[20];
+    protected Context context;
+    protected View[] views = new View[20];
+    protected View[] sdvs = new View[20];
 
     public LunboPagerAdapter(Context context) {
         this.context = context;
         initImageViews();
     }
 
-    private void initImageViews() {
+    protected void initImageViews() {
         for (int i = 0; i < getImageCount(); i++) {
             views[i] = LayoutInflater.from(context).inflate(getViewPagerItemLayoutResId(), null, false);
             sdvs[i] = showImage(views[i], i);
