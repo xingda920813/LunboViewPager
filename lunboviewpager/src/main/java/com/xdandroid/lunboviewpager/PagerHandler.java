@@ -45,9 +45,7 @@ public class PagerHandler extends Handler {
     public void handleMessage(Message msg) {
         super.handleMessage(msg);
         //检查消息队列并移除未发送的消息，这主要是避免在复杂环境下消息出现重复等问题。
-        if (this.hasMessages(MSG_UPDATE_IMAGE)){
-            this.removeMessages(MSG_UPDATE_IMAGE);
-        }
+        removeCallbacksAndMessages(null);
         switch (msg.what) {
             case MSG_UPDATE_IMAGE:
                 currentItem++;
