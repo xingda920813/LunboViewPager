@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 /**
  * Created by XingDa on 2016/01/28.
  */
-public abstract class WithoutLunboPagerAdapter extends PagerAdapter {
+public abstract class SinglePictureAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {

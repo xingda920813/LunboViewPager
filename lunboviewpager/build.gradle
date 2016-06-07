@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/xingda920813/LunboViewPager'
     gitUrl = 'https://github.com/xingda920813/LunboViewPager.git'
 
-    libraryVersion = '1.0.3'
+    libraryVersion = '1.1.0'
 
     developerId = 'xingda920813'
     developerName = 'Da Xing'
@@ -26,13 +26,13 @@ ext {
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 4
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.1.0"
     }
     buildTypes {
         release {
@@ -50,11 +50,11 @@ dependencies {
 }
 
 task makeJar(type: Copy) {
-    delete 'build/libs/LunboViewPager-1.0.3.jar'
+    delete 'build/libs/LunboViewPager-1.1.0.jar'
     from('build/intermediates/bundles/release/')
     into('build/libs/')
     include('classes.jar')
-    rename ('classes.jar', 'LunboViewPager-1.0.3.jar')
+    rename ('classes.jar', 'LunboViewPager-1.1.0.jar')
 }
 
 makeJar.dependsOn(build)

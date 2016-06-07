@@ -10,46 +10,38 @@ import java.util.List;
 /**
  * Created by XingDa on 2016/5/10.
  */
-public class PagerProxy<T> {
+public class Proxy<T> {
 
     protected List<T> list;
     protected long interval;
-    protected LunboPagerAdapter lunboPagerAdapter;
-    protected WithoutLunboPagerAdapter withoutLunboPagerAdapter;
-    protected PagerHandler pagerHandler;
+    protected Adapter adapter;
+    protected SinglePictureAdapter singlePictureAdapter;
+    protected PagerHandler handler;
 
-    public PagerProxy(List<T> list, long interval, LunboPagerAdapter pagerAdapter) {
+    public Proxy(List<T> list, long interval, Adapter pagerAdapter) {
         this.list = list;
         this.interval = interval;
-        this.lunboPagerAdapter = pagerAdapter;
-        this.withoutLunboPagerAdapter = new WithoutLunboPagerAdapter() {
+        this.adapter = pagerAdapter;
+        this.singlePictureAdapter = new SinglePictureAdapter() {
             @Override
             protected void onImageClick(View view, int position) {
-                lunboPagerAdapter.onImageClick(view, position);
+                adapter.onImageClick(view, position);
             }
 
             @Override
             protected View showImage(View inflatedLayout, int position) {
-                return lunboPagerAdapter.showImage(inflatedLayout, position);
+                return adapter.showImage(inflatedLayout, position);
             }
 
             @Override
             protected int getViewPagerItemLayoutResId() {
-                return lunboPagerAdapter.getViewPagerItemLayoutResId();
+                return adapter.getViewPagerItemLayoutResId();
             }
         };
     }
 
-    @SuppressWarnings({"unchecked", "CollectionAddedToSelf", "TryWithIdenticalCatches"})
-    public void onCreateView(ViewPager viewPager, View indicator) {
-        if (list.size() >= 3) {
-            viewPager.setAdapter(lunboPagerAdapter);
-            viewPager.setCurrentItem(list.size() * 500);
-        } else if (list.size() == 2) {
-            list.addAll(list);
-            viewPager.setAdapter(lunboPagerAdapter);
-            viewPager.setCurrentItem(list.size() * 500);
-        }
+    @SuppressWarnings({"CollectionAddedToSelf", "TryWithIdenticalCatches"})
+    public void onBindView(ViewPager viewPager, View indicator) {
         Class<? extends View> clazz = indicator.getClass();
         Class[] methodArgs = new Class[2];
         methodArgs[0] = ViewPager.class;
@@ -65,11 +57,11 @@ public class PagerProxy<T> {
         Object[] args = new Object[2];
         if (list.size() >= 3) {
             indicator.setVisibility(View.VISIBLE);
-            lunboPagerAdapter.notifyDataSetChanged();
-            viewPager.setAdapter(lunboPagerAdapter);
-            pagerHandler = new PagerHandler(viewPager, interval);
+            viewPager.setAdapter(adapter);
+            viewPager.setCurrentItem(list.size() * 500);
+            handler = new PagerHandler(viewPager, interval);
             args[0] = viewPager;
-            args[1] = pagerHandler;
+            args[1] = handler;
             try {
                 method.invoke(indicator,args);
             } catch (IllegalAccessException e) {
@@ -78,12 +70,13 @@ public class PagerProxy<T> {
                 e.printStackTrace();
             }
         } else if (list.size() == 2) {
+            list.addAll(list);
             indicator.setVisibility(View.VISIBLE);
-            lunboPagerAdapter.notifyDataSetChanged();
-            viewPager.setAdapter(lunboPagerAdapter);
-            pagerHandler = new PagerHandler(viewPager, interval);
+            viewPager.setAdapter(adapter);
+            viewPager.setCurrentItem(list.size() * 500);
+            handler = new PagerHandler(viewPager, interval);
             args[0] = viewPager;
-            args[1] = pagerHandler;
+            args[1] = handler;
             try {
                 method.invoke(indicator,args);
             } catch (IllegalAccessException e) {
@@ -93,7 +86,7 @@ public class PagerProxy<T> {
             }
         } else if (list.size() == 1) {
             indicator.setVisibility(View.GONE);
-            viewPager.setAdapter(withoutLunboPagerAdapter);
+            viewPager.setAdapter(singlePictureAdapter);
         }
     }
 }

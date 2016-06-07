@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
-import com.xdandroid.lunboviewpager.LunboPagerAdapter;
-import com.xdandroid.lunboviewpager.PagerProxy;
+import com.xdandroid.lunboviewpager.Adapter;
+import com.xdandroid.lunboviewpager.Proxy;
 import com.xdandroid.lunboviewpager.viewpagerindicator.CirclePageIndicator;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager vp_lunbo = (ViewPager) findViewById(R.id.vp_lunbo);
         CirclePageIndicator indicator_lunbo = (CirclePageIndicator) findViewById(R.id.indicator_lunbo);
         indicator_lunbo.setFillColor(getResources().getColor(R.color.colorAccent));
-        PagerProxy<SampleBean> proxy = new PagerProxy<>(list, 4000, new LunboPagerAdapter(this) {
+        Proxy<SampleBean> proxy = new Proxy<>(list, 4000, new Adapter(this) {
             protected View showImage(View inflatedLayout, int position) {
                 ImageView imageView = (ImageView) inflatedLayout.findViewById(R.id.iv_lunbo);
                 Picasso.with(MainActivity.this).load(list.get(position).getImageResId()).into(imageView);
@@ -61,6 +61,6 @@ public class MainActivity extends AppCompatActivity {
             protected int getImageCount() {return list.size();}
             protected void onImageClick(View view, int position) {Snackbar.make(view,list.get(position).getMessage(),Snackbar.LENGTH_SHORT).show();}
         });
-        proxy.onCreateView(vp_lunbo,indicator_lunbo);
+        proxy.onBindView(vp_lunbo,indicator_lunbo);
     }
 }

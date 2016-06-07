@@ -12,9 +12,9 @@
 ## 引入
 ### 1.添加二进制
 
-引入LunboViewPager-1.0.3.jar或build.gradle中添加
+引入LunboViewPager-1.1.0.jar或build.gradle中添加
 
-    compile 'com.xdandroid:lunboviewpager:1.0.3'
+    compile 'com.xdandroid:lunboviewpager:1.1.0'
 
 ### 2.确保项目中已经正确集成JakeWharton/ViewPagerIndicator
 
@@ -62,11 +62,11 @@ Indicator的可设置项参照JakeWharton/ViewPagerIndicator提供的API。
 	vp_lunbo.addOnPageChangeListener(onPageChangeListener);
     indicator_lunbo.setFillColor(getResources().getColor(R.color.colorAccent));
 
-#### 2.构建LunboPagerAdapter
+#### 2.构建Adapter
 
-public LunboPagerAdapter(Context context);
+public Adapter(Context context);
 
-需实现LunboPagerAdapter里的4个方法：
+需实现Adapter里的4个方法：
 
 - protected abstract int getViewPagerItemLayoutResId();		//指定ViewPager的每一页的Layout资源ID
 
@@ -80,7 +80,7 @@ inflatedLayout即根据上面的资源ID渲染出来的View，开发者需要通
 
 示例：
 
-	new LunboPagerAdapter(MainActivity.this) {
+	new Adapter(MainActivity.this) {
         protected View showImage(View inflatedLayout, int position) {
             ImageView imageView = (ImageView) inflatedLayout.findViewById(R.id.iv_lunbo);
             Picasso.with(MainActivity.this).load(list.get(position).getImageResId()).into(imageView);
@@ -93,23 +93,23 @@ inflatedLayout即根据上面的资源ID渲染出来的View，开发者需要通
 		}
     }
 
-#### 3.构建PagerProxy
+#### 3.构建Proxy
 
-public PagerProxy(List<${JavaBean}> list, int interval, LunboPagerAdapter adapter);
+public Proxy(List<${JavaBean}> list, int interval, Adapter adapter);
 
 interval为轮播时间间隔。
 
 #### 4.开始轮播
 
-void PagerProxy.onCreateView(ViewPager viewPager,View indicator);
+void Proxy.onBindView(ViewPager viewPager,View indicator);
 
 ## 轮播图ViewPager作为RecyclerView的一个Item来使用
 
-#### 1.在Adapter的构造方法里构建LunboPagerAdapter
+#### 1.在RecyclerView.Adapter的构造方法里构建com.xdandroid.lunboviewpager.Adapter
 
-public LunboPagerAdapter(Context context);
+public com.xdandroid.lunboviewpager.Adapter(Context context);
 
-需实现LunboPagerAdapter里的4个方法：
+需实现com.xdandroid.lunboviewpager.Adapter里的4个方法：
 
 - protected abstract int getViewPagerItemLayoutResId();		//指定ViewPager的每一页的Layout资源ID
 
@@ -123,7 +123,7 @@ inflatedLayout即根据上面的资源ID渲染出来的View，开发者需要通
 
 示例：
 
-	new LunboPagerAdapter(context) {
+	new com.xdandroid.lunboviewpager.Adapter(context) {
         protected View showImage(View inflatedLayout, int position) {
             ImageView imageView = (ImageView) inflatedLayout.findViewById(R.id.iv_lunbo);
             Picasso.with(context).load(list.get(position).getImageResId()).into(imageView);
@@ -136,39 +136,25 @@ inflatedLayout即根据上面的资源ID渲染出来的View，开发者需要通
 		}
     }
 
-#### 2.在Adapter的构造方法里构建PagerProxy
+#### 2.在RecyclerView.Adapter的构造方法里构建Proxy
 
-public PagerProxy(List<${JavaBean}> list, int interval, LunboPagerAdapter adapter);
+public Proxy(List<${JavaBean}> list, int interval, com.xdandroid.lunboviewpager.Adapter adapter);
 
 interval为轮播时间间隔。
 
-#### 3.onCreateViewHolder
-
-在最后返回viewHolder前，添加proxy.onCreateViewHolder(viewHolder.viewPager);
-
-示例：
-
-	@Override
-    public MainAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_in_recyclerview,parent,false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        proxy.onCreateViewHolder(viewHolder.vp_lunbo);
-        return viewHolder;
-    }
-
-#### 4.onBindViewHolder
+#### 3.onBindViewHolder
 
 先给ViewPager和Indicator设置需要的自定义属性（OnPageChangeListener, Indicator的填充颜色, etc.）
 
 Indicator的可设置项参照JakeWharton/ViewPagerIndicator提供的API。
 
-然后添加proxy.onBindViewHolder(holder.viewPager,holder.indicator);
+然后添加proxy.onBindView(holder.viewPager,holder.indicator);
 
 示例：
 
 	@Override
     public void onBindViewHolder(final MainAdapter.ViewHolder holder, int position) {
         holder.indicator_lunbo.setFillColor(context.getResources().getColor(R.color.colorAccent));
-        proxy.onBindViewHolder(holder.vp_lunbo,holder.indicator_lunbo);
+        proxy.onBindView(holder.vp_lunbo,holder.indicator_lunbo);
     }
 

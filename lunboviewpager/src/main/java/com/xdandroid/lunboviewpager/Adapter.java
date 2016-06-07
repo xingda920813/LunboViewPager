@@ -9,18 +9,18 @@ import android.view.ViewGroup;
 /**
  * Created by XingDa on 2015/12/30.
  */
-public abstract class LunboPagerAdapter extends PagerAdapter {
+public abstract class Adapter extends PagerAdapter {
 
     protected Context context;
     protected View[] views = new View[20];
     protected View[] sdvs = new View[20];
 
-    public LunboPagerAdapter(Context context) {
+    public Adapter(Context context) {
         this.context = context;
         initImageViews();
     }
 
-    protected void initImageViews() {
+    public void initImageViews() {
         for (int i = 0; i < getImageCount(); i++) {
             views[i] = LayoutInflater.from(context).inflate(getViewPagerItemLayoutResId(), null, false);
             sdvs[i] = showImage(views[i], i);
@@ -62,11 +62,5 @@ public abstract class LunboPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
 
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-        initImageViews();
     }
 }
