@@ -14,9 +14,11 @@
 
 引入LunboViewPager-1.1.0.jar或build.gradle中添加
 
-    compile 'com.xdandroid:lunboviewpager:1.1.0'
+    compile 'com.xdandroid:lunboviewpager:+'
 
 ### 2.确保项目中已经正确集成JakeWharton/ViewPagerIndicator
+
+[https://github.com/JakeWharton/ViewPagerIndicator](https://github.com/JakeWharton/ViewPagerIndicator "JakeWharton/ViewPagerIndicator")
 
 ### 3.布局文件(Activity/Fragment/RecyclerView的Item)
 
@@ -58,6 +60,8 @@
 #### 1.给ViewPager和Indicator设置需要的自定义属性（OnPageChangeListener, Indicator的填充颜色, etc.）
 
 Indicator的可设置项参照JakeWharton/ViewPagerIndicator提供的API。
+
+[https://github.com/JakeWharton/ViewPagerIndicator](https://github.com/JakeWharton/ViewPagerIndicator "JakeWharton/ViewPagerIndicator")
 
 	vp_lunbo.addOnPageChangeListener(onPageChangeListener);
     indicator_lunbo.setFillColor(getResources().getColor(R.color.colorAccent));
@@ -147,6 +151,8 @@ interval为轮播时间间隔。
 先给ViewPager和Indicator设置需要的自定义属性（OnPageChangeListener, Indicator的填充颜色, etc.）
 
 Indicator的可设置项参照JakeWharton/ViewPagerIndicator提供的API。
+
+[https://github.com/JakeWharton/ViewPagerIndicator](https://github.com/JakeWharton/ViewPagerIndicator "JakeWharton/ViewPagerIndicator")
 
 然后添加proxy.onBindView(holder.viewPager,holder.indicator);
 
