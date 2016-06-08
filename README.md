@@ -1,4 +1,4 @@
-# LunboViewPager
+﻿# LunboViewPager
 ### 对ViewPager和ViewPagerIndicator的简单封装，实现轮播图效果。
 
 - 轮播图可以直接在Activity/Fragment中，也可以是RecyclerView的一个Item。
@@ -12,7 +12,7 @@
 ## 引入
 ### 1.添加二进制
 
-引入LunboViewPager-1.1.0.jar或build.gradle中添加
+build.gradle中添加
 
     compile 'com.xdandroid:lunboviewpager:+'
 
