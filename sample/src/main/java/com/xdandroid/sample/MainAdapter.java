@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.xdandroid.lunboviewpager.Adapter;
 import com.xdandroid.lunboviewpager.Proxy;
-import com.xdandroid.lunboviewpager.viewpagerindicator.CirclePageIndicator;
+import com.xdandroid.lunboviewpager.CirclePageIndicator;
 
 import java.util.List;
 

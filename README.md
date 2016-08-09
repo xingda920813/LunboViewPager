@@ -34,7 +34,7 @@ build.gradle中添加
     		android:layout_width="352dp"
     		android:layout_height="176dp"/>
     
-    	<com.xdandroid.lunboviewpager.viewpagerindicator.CirclePageIndicator
+    	<com.xdandroid.lunboviewpager.CirclePageIndicator
     		android:id="@+id/indicator_lunbo"
     		android:layout_width="37.5dp"
     		android:layout_height="wrap_content"
