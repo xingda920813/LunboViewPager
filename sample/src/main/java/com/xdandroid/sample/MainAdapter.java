@@ -1,20 +1,17 @@
 package com.xdandroid.sample;
 
-import android.content.Context;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.content.*;
+import android.support.design.widget.*;
+import android.support.v4.view.*;
+import android.support.v7.widget.*;
+import android.view.*;
+import android.widget.*;
 
-import com.squareup.picasso.Picasso;
+import com.squareup.picasso.*;
 import com.xdandroid.lunboviewpager.Adapter;
-import com.xdandroid.lunboviewpager.Proxy;
-import com.xdandroid.lunboviewpager.CirclePageIndicator;
+import com.xdandroid.lunboviewpager.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by XingDa on 2016/5/12.
@@ -22,31 +19,44 @@ import java.util.List;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private Context context;
-    private Proxy<SampleBean> proxy;
+    private Proxy<Bean> proxy;
 
-    public MainAdapter(final Context context, final List<SampleBean> list) {
+    public MainAdapter(final Context context, final List<Bean> list) {
         this.context = context;
         this.proxy = new Proxy<>(list, 4000, new Adapter(context) {
-            @Override
+            /**
+             * 示例 :
+             * ImageView imageView = (ImageView) inflatedLayout.findViewById(R.id.iv_lunbo);
+             * Picasso.with(mContext).load(mList.get(position).imageResId).into(imageView);
+             * return imageView;
+             * @param inflatedLayout 根据getViewPagerItemLayoutResId指定的资源ID渲染出来的View
+             * @param position position
+             * @return 图片控件的对象(ImageView, DraweeView, etc..)
+             */
             protected View showImage(View inflatedLayout, int position) {
                 ImageView imageView = (ImageView) inflatedLayout.findViewById(R.id.iv_lunbo);
-                Picasso.with(context).load(list.get(position).getImageResId()).into(imageView);
+                Picasso.with(context).load(list.get(position).imageResId).into(imageView);
                 return imageView;
             }
-
-            @Override
+            /**
+             * @return ViewPager的每一页的Layout资源ID
+             */
             protected int getViewPagerItemLayoutResId() {
                 return R.layout.item_in_viewpager;
             }
-
-            @Override
+            /**
+             * @return 总页数
+             */
             protected int getImageCount() {
                 return list.size();
             }
-
-            @Override
+            /**
+             * 点击事件
+             * @param view inflatedLayout渲染出来的View
+             * @param position position
+             */
             protected void onImageClick(View view, int position) {
-                Snackbar.make(view,list.get(position).getMessage(),Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view,list.get(position).message,Snackbar.LENGTH_SHORT).show();
             }
         });
     }
@@ -58,7 +68,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final MainAdapter.ViewHolder holder, int position) {
+        //设置当前被选中的圆点的填充颜色
         holder.indicator_lunbo.setFillColor(context.getResources().getColor(R.color.colorAccent));
+        //设置圆点半径
+        holder.indicator_lunbo.setRadius(UIUtils.dp2px(holder.indicator_lunbo.getContext(), 3.25f));
+        //设置圆点之间的距离相对于圆点半径的倍数
+        holder.indicator_lunbo.setDistanceBetweenCircles(3.0);
         proxy.onBindView(holder.vp_lunbo,holder.indicator_lunbo);
     }
 

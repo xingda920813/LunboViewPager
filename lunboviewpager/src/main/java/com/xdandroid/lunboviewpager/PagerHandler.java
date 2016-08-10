@@ -1,8 +1,7 @@
 package com.xdandroid.lunboviewpager;
 
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.view.ViewPager;
+import android.os.*;
+import android.support.v4.view.*;
 
 /**
  * Created by XingDa on 2016/01/01.

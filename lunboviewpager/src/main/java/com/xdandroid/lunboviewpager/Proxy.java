@@ -1,9 +1,9 @@
 package com.xdandroid.lunboviewpager;
 
-import android.support.v4.view.ViewPager;
-import android.view.View;
+import android.support.v4.view.*;
+import android.view.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by XingDa on 2016/5/10.

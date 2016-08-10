@@ -25,7 +25,7 @@
 
         <com.xdandroid.lunboviewpager.CirclePageIndicator
             android:id="@+id/indicator_lunbo"
-            android:layout_width="39dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="6dp"

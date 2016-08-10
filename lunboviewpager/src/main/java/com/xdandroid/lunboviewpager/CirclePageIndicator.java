@@ -16,27 +16,19 @@
  */
 package com.xdandroid.lunboviewpager;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
-import android.graphics.drawable.Drawable;
-import android.os.Message;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewConfigurationCompat;
-import android.support.v4.view.ViewPager;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewConfiguration;
+import android.content.*;
+import android.content.res.*;
+import android.graphics.*;
+import android.graphics.Paint.*;
+import android.graphics.drawable.*;
+import android.os.*;
+import android.support.annotation.*;
+import android.support.v4.view.*;
+import android.util.*;
+import android.view.*;
 
-import static android.graphics.Paint.ANTI_ALIAS_FLAG;
-import static android.widget.LinearLayout.HORIZONTAL;
-import static android.widget.LinearLayout.VERTICAL;
+import static android.graphics.Paint.*;
+import static android.widget.LinearLayout.*;
 
 /**
  * Draws circles (one for each view). The current view position is filled and
@@ -51,6 +43,7 @@ public class CirclePageIndicator extends View implements ViewPager.OnPageChangeL
     private final Paint mPaintFill = new Paint(ANTI_ALIAS_FLAG);
     private ViewPager mViewPager;
     private double mDisBetweenCirclesMultiplier = 3;
+    private double mDisMultiplierCompensation = 1.07;
     private int mCurrentPage;
     private int mSnapPage;
     private float mPageOffset;
@@ -115,11 +108,19 @@ public class CirclePageIndicator extends View implements ViewPager.OnPageChangeL
         mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
     }
 
+    /**
+     * 设置圆点之间的距离相对于圆点半径的倍数
+     * @param timesToRadius_multiplier 圆点间距相对于圆点半径的倍数
+     */
     public void setDistanceBetweenCircles(double timesToRadius_multiplier) {
         mDisBetweenCirclesMultiplier = timesToRadius_multiplier;
         invalidate();
     }
 
+    /**
+     * 得到圆点之间的距离相对于圆点半径的倍数
+     * @return 圆点间距相对于圆点半径的倍数
+     */
     public double getDistanceBetweenCirclesMultiplier() {
         return mDisBetweenCirclesMultiplier;
     }
@@ -133,7 +134,7 @@ public class CirclePageIndicator extends View implements ViewPager.OnPageChangeL
         return mCentered;
     }
 
-    public void setPageColor(int pageColor) {
+    public void setPageColor(@ColorInt int pageColor) {
         mPaintPageFill.setColor(pageColor);
         invalidate();
     }
@@ -142,11 +143,19 @@ public class CirclePageIndicator extends View implements ViewPager.OnPageChangeL
         return mPaintPageFill.getColor();
     }
 
-    public void setFillColor(int fillColor) {
+    /**
+     * 设置当前被选中的圆点的填充颜色
+     * @param fillColor 当前被选中的圆点的填充颜色
+     */
+    public void setFillColor(@ColorInt int fillColor) {
         mPaintFill.setColor(fillColor);
         invalidate();
     }
 
+    /**
+     * 得到当前被选中的圆点的填充颜色
+     * @return 当前被选中的圆点的填充颜色
+     */
     public int getFillColor() {
         return mPaintFill.getColor();
     }
@@ -186,11 +195,19 @@ public class CirclePageIndicator extends View implements ViewPager.OnPageChangeL
         return mPaintStroke.getStrokeWidth();
     }
 
-    public void setRadius(float radius) {
-        mRadius = radius;
+    /**
+     * 设置圆点半径(px)
+     * @param radiusInPx 圆点半径(px)
+     */
+    public void setRadius(float radiusInPx) {
+        mRadius = radiusInPx;
         invalidate();
     }
 
+    /**
+     * 得到圆点半径(px)
+     * @return  圆点半径(px)
+     */
     public float getRadius() {
         return mRadius;
     }
@@ -237,7 +254,7 @@ public class CirclePageIndicator extends View implements ViewPager.OnPageChangeL
             shortPaddingBefore = getPaddingLeft();
         }
 
-        final float threeRadius = (float) (mRadius * mDisBetweenCirclesMultiplier * 1.07);
+        final float threeRadius = (float) (mRadius * mDisBetweenCirclesMultiplier * mDisMultiplierCompensation);
         final float shortOffset = shortPaddingBefore + mRadius;
         float longOffset = longPaddingBefore + mRadius;
         if (mCentered) {
@@ -455,12 +472,8 @@ public class CirclePageIndicator extends View implements ViewPager.OnPageChangeL
         } else {
             //Calculate the width according the views count
             final int count = mViewPager.getAdapter().getCount() / 1000;
-            result = (int) (getPaddingLeft() + getPaddingRight()
-                    + (count * 2 * mRadius) + (count - 1) * mRadius + 1);
-            //Respect AT_MOST value if that was what is called for by measureSpec
-            if (specMode == MeasureSpec.AT_MOST) {
-                result = Math.min(result, specSize);
-            }
+            final double threeRadius = mRadius * mDisBetweenCirclesMultiplier * mDisMultiplierCompensation;
+            result = (int) (count * threeRadius);
         }
         return result;
     }
