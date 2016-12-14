@@ -34,7 +34,7 @@ public abstract class Adapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return (getImageCount() * 1000);
+        return getImageCount() * 1000;
     }
 
     /**

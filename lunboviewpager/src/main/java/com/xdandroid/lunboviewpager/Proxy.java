@@ -16,7 +16,6 @@ public class Proxy<T> {
     protected SinglePictureAdapter singlePictureAdapter;
 
     public Proxy(List<T> list, long interval, Adapter pagerAdapter) {
-        if (list.size() == 2) list.addAll(new ArrayList<>(list));
         this.list = list;
         this.interval = interval;
         this.adapter = pagerAdapter;
