@@ -16,6 +16,7 @@ public class Proxy<T> {
     protected SinglePictureAdapter singlePictureAdapter;
 
     public Proxy(List<T> list, long interval, Adapter pagerAdapter) {
+        if (list.size() == 2) list.addAll(new ArrayList<>(list));
         this.list = list;
         this.interval = interval;
         this.adapter = pagerAdapter;
@@ -37,22 +38,15 @@ public class Proxy<T> {
         };
     }
 
-    @SuppressWarnings("CollectionAddedToSelf")
     public void onBindView(ViewPager viewPager, CirclePageIndicator indicator) {
-        if (list.size() >= 3) {
-            indicator.setVisibility(View.VISIBLE);
-            viewPager.setAdapter(adapter);
-            viewPager.setCurrentItem(list.size() * 500);
-            indicator.setViewPager(viewPager, new PagerHandler(viewPager, interval));
-        } else if (list.size() == 2) {
-            list.addAll(list);
-            indicator.setVisibility(View.VISIBLE);
-            viewPager.setAdapter(adapter);
-            viewPager.setCurrentItem(list.size() * 500);
-            indicator.setViewPager(viewPager, new PagerHandler(viewPager, interval));
-        } else if (list.size() == 1) {
+        if (list.size() == 1) {
             indicator.setVisibility(View.GONE);
             viewPager.setAdapter(singlePictureAdapter);
+        } else {
+            indicator.setVisibility(View.VISIBLE);
+            viewPager.setAdapter(adapter);
+            viewPager.setCurrentItem(list.size() * 500);
+            indicator.setViewPager(viewPager, new PagerHandler(viewPager, interval));
         }
     }
 }
