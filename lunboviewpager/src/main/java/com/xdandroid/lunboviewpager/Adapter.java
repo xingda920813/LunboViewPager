@@ -4,29 +4,26 @@ import android.content.*;
 import android.support.v4.view.*;
 import android.view.*;
 
-/**
- * Created by XingDa on 2015/12/30.
- */
 public abstract class Adapter extends PagerAdapter {
 
-    protected Context context;
-    protected View[] views = new View[20];
-    protected View[] sdvs = new View[20];
+    protected Context mContext;
+    protected View[] mInflatedViews = new View[20];
+    protected View[] mImageViews = new View[20];
 
     public Adapter(Context context) {
-        this.context = context;
+        this.mContext = context;
         initImageViews();
     }
 
     public void initImageViews() {
         for (int i = 0; i < getImageCount(); i++) {
-            views[i] = LayoutInflater.from(context).inflate(getViewPagerItemLayoutResId(), null, false);
-            sdvs[i] = showImage(views[i], i);
+            mInflatedViews[i] = LayoutInflater.from(mContext).inflate(getViewPagerItemLayoutResId(), null, false);
+            mImageViews[i] = showImage(mInflatedViews[i], i);
             final int finalI = i;
-            sdvs[i].setOnClickListener(new View.OnClickListener() {
+            mImageViews[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onImageClick(sdvs[finalI], finalI);
+                    onImageClick(mImageViews[finalI], finalI);
                 }
             });
         }
@@ -72,7 +69,7 @@ public abstract class Adapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = views[position % getImageCount()];
+        View view = mInflatedViews[position % getImageCount()];
         if (view.getParent() != null) {
             ((ViewGroup) (view.getParent())).removeView(view);
         }
@@ -81,7 +78,5 @@ public abstract class Adapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-
-    }
+    public void destroyItem(ViewGroup container, int position, Object object) {}
 }

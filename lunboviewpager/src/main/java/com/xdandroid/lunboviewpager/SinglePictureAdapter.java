@@ -3,9 +3,6 @@ package com.xdandroid.lunboviewpager;
 import android.support.v4.view.*;
 import android.view.*;
 
-/**
- * Created by XingDa on 2016/01/28.
- */
 public abstract class SinglePictureAdapter extends PagerAdapter {
 
     @Override

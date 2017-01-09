@@ -3,13 +3,10 @@ package com.xdandroid.lunboviewpager;
 import android.os.*;
 import android.support.v4.view.*;
 
-/**
- * Created by XingDa on 2016/01/01.
- */
 public class PagerHandler extends Handler {
 
-    protected ViewPager viewPager;
-    protected int currentItem;
+    protected ViewPager mViewPager;
+    protected int mCurrentItem;
 
     /**
      * 请求更新显示的View。
@@ -34,10 +31,10 @@ public class PagerHandler extends Handler {
     public static long MSG_DELAY = 4000;
 
     protected PagerHandler(ViewPager viewPager, long interval) {
-        this.viewPager = viewPager;
+        this.mViewPager = viewPager;
         MSG_DELAY = interval;
-        this.currentItem = (viewPager.getAdapter().getCount()) / 2;
-        viewPager.setCurrentItem(this.currentItem);
+        this.mCurrentItem = (viewPager.getAdapter().getCount()) / 2;
+        viewPager.setCurrentItem(this.mCurrentItem);
     }
 
     @Override
@@ -47,8 +44,8 @@ public class PagerHandler extends Handler {
         removeCallbacksAndMessages(null);
         switch (msg.what) {
             case MSG_UPDATE_IMAGE:
-                currentItem++;
-                viewPager.setCurrentItem(currentItem);
+                mCurrentItem++;
+                mViewPager.setCurrentItem(mCurrentItem);
                 //准备下次播放
                 this.sendEmptyMessageDelayed(MSG_UPDATE_IMAGE, MSG_DELAY);
                 break;
@@ -60,7 +57,7 @@ public class PagerHandler extends Handler {
                 break;
             case MSG_PAGE_CHANGED:
                 //记录当前的页号，避免播放的时候页面显示不正确。
-                currentItem = msg.arg1;
+                mCurrentItem = msg.arg1;
                 break;
             default:
                 break;

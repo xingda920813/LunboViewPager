@@ -13,17 +13,14 @@ import com.xdandroid.lunboviewpager.*;
 
 import java.util.*;
 
-/**
- * Created by XingDa on 2016/5/12.
- */
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
-    private Context context;
-    private Proxy<Bean> proxy;
+    Context mContext;
+    Proxy<Bean> mProxy;
 
-    public MainAdapter(final Context context, final List<Bean> list) {
-        this.context = context;
-        this.proxy = new Proxy<>(list, 4000, new Adapter(context) {
+    public MainAdapter(Context context, final List<Bean> list) {
+        mContext = context;
+        mProxy = new Proxy<>(list, 4000, new Adapter(context) {
             /**
              * 示例 :
              * ImageView imageView = (ImageView) inflatedLayout.findViewById(R.id.iv_lunbo);
@@ -35,7 +32,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
              */
             protected View showImage(View inflatedLayout, int position) {
                 ImageView imageView = (ImageView) inflatedLayout.findViewById(R.id.iv_lunbo);
-                Picasso.with(context).load(list.get(position).imageResId).into(imageView);
+                Picasso.with(mContext).load(list.get(position).imageResId).into(imageView);
                 return imageView;
             }
             /**
@@ -69,12 +66,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final MainAdapter.ViewHolder holder, int position) {
         //设置当前被选中的圆点的填充颜色
-        holder.indicator_lunbo.setFillColor(context.getResources().getColor(R.color.colorAccent));
+        holder.indicator_lunbo.setFillColor(mContext.getResources().getColor(R.color.colorAccent));
         //设置圆点半径
         holder.indicator_lunbo.setRadius(UIUtils.dp2px(holder.indicator_lunbo.getContext(), 3.25f));
         //设置圆点之间的距离相对于圆点半径的倍数
         holder.indicator_lunbo.setDistanceBetweenCircles(3.0);
-        proxy.onBindView(holder.vp_lunbo,holder.indicator_lunbo);
+        mProxy.onBindView(holder.vp_lunbo,holder.indicator_lunbo);
     }
 
     @Override
@@ -82,8 +79,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         return 1;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(View itemView) {
+    static final class ViewHolder extends RecyclerView.ViewHolder {
+        ViewHolder(View itemView) {
             super(itemView);
             vp_lunbo = (ViewPager) itemView.findViewById(R.id.vp_lunbo);
             indicator_lunbo = (CirclePageIndicator) itemView.findViewById(R.id.indicator_lunbo);

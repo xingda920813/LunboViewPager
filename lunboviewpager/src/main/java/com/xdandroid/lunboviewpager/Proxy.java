@@ -5,47 +5,33 @@ import android.view.*;
 
 import java.util.*;
 
-/**
- * Created by XingDa on 2016/5/10.
- */
 public class Proxy<T> {
 
-    protected List<T> list;
-    protected long interval;
-    protected Adapter adapter;
-    protected SinglePictureAdapter singlePictureAdapter;
+    protected List<T> mList;
+    protected long mInterval;
+    protected Adapter mAdapter;
+    protected SinglePictureAdapter mSinglePictureAdapter;
 
     public Proxy(List<T> list, long interval, Adapter pagerAdapter) {
-        this.list = list;
-        this.interval = interval;
-        this.adapter = pagerAdapter;
-        this.singlePictureAdapter = new SinglePictureAdapter() {
-            @Override
-            protected void onImageClick(View view, int position) {
-                adapter.onImageClick(view, position);
-            }
-
-            @Override
-            protected View showImage(View inflatedLayout, int position) {
-                return adapter.showImage(inflatedLayout, position);
-            }
-
-            @Override
-            protected int getViewPagerItemLayoutResId() {
-                return adapter.getViewPagerItemLayoutResId();
-            }
+        mList = list;
+        mInterval = interval;
+        mAdapter = pagerAdapter;
+        mSinglePictureAdapter = new SinglePictureAdapter() {
+            protected void onImageClick(View view, int position) {mAdapter.onImageClick(view, position);}
+            protected View showImage(View inflatedLayout, int position) {return mAdapter.showImage(inflatedLayout, position);}
+            protected int getViewPagerItemLayoutResId() {return mAdapter.getViewPagerItemLayoutResId();}
         };
     }
 
     public void onBindView(ViewPager viewPager, CirclePageIndicator indicator) {
-        if (list.size() == 1) {
+        if (mList.size() == 1) {
             indicator.setVisibility(View.GONE);
-            viewPager.setAdapter(singlePictureAdapter);
+            viewPager.setAdapter(mSinglePictureAdapter);
         } else {
             indicator.setVisibility(View.VISIBLE);
-            viewPager.setAdapter(adapter);
-            viewPager.setCurrentItem(list.size() * 500);
-            indicator.setViewPager(viewPager, new PagerHandler(viewPager, interval));
+            viewPager.setAdapter(mAdapter);
+            viewPager.setCurrentItem(mList.size() * 500);
+            indicator.setViewPager(viewPager, new PagerHandler(viewPager, mInterval));
         }
     }
 }

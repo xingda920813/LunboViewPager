@@ -2,10 +2,6 @@ package com.xdandroid.lunboviewpager;
 
 import android.content.*;
 
-/**
- * Created by xingda on 16-8-10.
- */
-
 public class UIUtils {
 
     public static int px2dp(Context context, float pxValue) {

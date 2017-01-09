@@ -17,7 +17,7 @@ import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Bean> list;
+    List<Bean> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,21 +30,21 @@ public class MainActivity extends AppCompatActivity {
         setupViewPagerDirectlyInActivity();
     }
 
-    private void setupMockData() {
-        list = new ArrayList<>();
-        list.add(new Bean("小米MAX超耐久直播",R.mipmap.img1));
-        list.add(new Bean("嘘——看我发现了什么",R.mipmap.img2));
-        list.add(new Bean("母亲，您辛苦了",R.mipmap.img3));
-        list.add(new Bean("哭过、笑过、真爱过。",R.mipmap.img4));
+    void setupMockData() {
+        mList = new ArrayList<>();
+        mList.add(new Bean("小米MAX超耐久直播",R.mipmap.img1));
+        mList.add(new Bean("嘘——看我发现了什么",R.mipmap.img2));
+        mList.add(new Bean("母亲，您辛苦了",R.mipmap.img3));
+        mList.add(new Bean("哭过、笑过、真爱过。",R.mipmap.img4));
     }
 
-    private void setupViewPagerInRecyclerView() {
+    void setupViewPagerInRecyclerView() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MainAdapter(this, list));
+        recyclerView.setAdapter(new MainAdapter(this, mList));
     }
 
-    private void setupViewPagerDirectlyInActivity() {
+    void setupViewPagerDirectlyInActivity() {
         ViewPager vp_lunbo = (ViewPager) findViewById(R.id.vp_lunbo);
         CirclePageIndicator indicator_lunbo = (CirclePageIndicator) findViewById(R.id.indicator_lunbo);
         //设置当前被选中的圆点的填充颜色
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         indicator_lunbo.setRadius(UIUtils.dp2px(this, 3.25f));
         //设置圆点之间的距离相对于圆点半径的倍数
         indicator_lunbo.setDistanceBetweenCircles(3.0);
-        Proxy<Bean> proxy = new Proxy<>(list, 4000, new Adapter(this) {
+        Proxy<Bean> proxy = new Proxy<>(mList, 4000, new Adapter(this) {
             /**
              * 示例 :
              * ImageView imageView = (ImageView) inflatedLayout.findViewById(R.id.iv_lunbo);
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
              */
             protected View showImage(View inflatedLayout, int position) {
                 ImageView imageView = (ImageView) inflatedLayout.findViewById(R.id.iv_lunbo);
-                Picasso.with(MainActivity.this).load(list.get(position).imageResId).into(imageView);
+                Picasso.with(MainActivity.this).load(mList.get(position).imageResId).into(imageView);
                 return imageView;
             }
             /**
@@ -75,13 +75,13 @@ public class MainActivity extends AppCompatActivity {
             /**
              * @return 总页数
              */
-            protected int getImageCount() {return list.size();}
+            protected int getImageCount() {return mList.size();}
             /**
              * 点击事件
              * @param view inflatedLayout渲染出来的View
              * @param position position
              */
-            protected void onImageClick(View view, int position) {Snackbar.make(view,list.get(position).message,Snackbar.LENGTH_SHORT).show();}
+            protected void onImageClick(View view, int position) {Snackbar.make(view, mList.get(position).message,Snackbar.LENGTH_SHORT).show();}
         });
         proxy.onBindView(vp_lunbo,indicator_lunbo);
     }
