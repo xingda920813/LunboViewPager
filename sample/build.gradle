@@ -20,9 +20,9 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:+'
-    compile 'com.android.support:design:+'
-    compile 'com.android.support:cardview-v7:+'
-    compile 'com.squareup.picasso:picasso:+'
-    compile project(':lunboviewpager')
+    api 'com.android.support:appcompat-v7:+'
+    api 'com.android.support:design:+'
+    api 'com.android.support:cardview-v7:+'
+    api 'com.squareup.picasso:picasso:+'
+    api project(':lunboviewpager')
 }
