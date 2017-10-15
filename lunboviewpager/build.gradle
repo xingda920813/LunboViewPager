@@ -46,7 +46,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:+'
+    api 'com.android.support:appcompat-v7:+'
 }
 
 task makeJar(type: Copy) {
