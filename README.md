@@ -1,4 +1,6 @@
 ﻿# LunboViewPager
+ 
+ <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg"></a>
 
 [中文 README](https://github.com/xingda920813/LunboViewPager/blob/master/README_zh.md)
 
